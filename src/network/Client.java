@@ -134,7 +134,7 @@ public class Client {
                 objectHandler(recv());
             }
         } catch (NoCommandException ex) {
-            cMgr.print("Такая команда не найдена :(\nВведите команду help, чтобы вывести спискок команд");
+            cMgr.print("Команда не распознана :(\nВведите команду help, чтобы вывести спискок команд");
             log.error(ex.getMessage());
         } catch (NumberFormatException | ClassCastException ex) {
             cMgr.print("Ошибка\n" + ex.getMessage());

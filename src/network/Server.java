@@ -37,7 +37,7 @@ public class Server {
 
     private boolean isRunning = false;
     private DatagramChannel channel;
-    private Map<String, SocketAddress> clients = new HashMap<String, SocketAddress>();
+
     private ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     private Selector selector = Selector.open();
 
