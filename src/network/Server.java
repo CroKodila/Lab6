@@ -44,12 +44,21 @@ public class Server {
     private CollectionManager collectionManager;
     private ConsoleManager consoleManager;
 
-
+    /**
+     * мейн метод
+     * @param args
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         new Server(args).run();
     }
 
-
+    /**
+     * Конструктор
+     * @param args
+     * @throws IOException
+     */
     public Server(String[] args) throws IOException {
         try {
             if (args.length == 1) {
@@ -82,6 +91,11 @@ public class Server {
         }));
     }
 
+    /**
+     * запуск сервера
+     * @param port
+     * @throws IOException
+     */
     private void startServer(int port) throws IOException {
         channel = DatagramChannel.open();
         channel.configureBlocking(false);
@@ -97,6 +111,11 @@ public class Server {
         isRunning = false;
     }
 
+    /**
+     * Запуск серверной части приложения
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void run() throws IOException, ClassNotFoundException {
         isRunning = true;
 
@@ -137,6 +156,12 @@ public class Server {
         }
     }
 
+    /**
+     * Прочтение данных клиента
+     * @param key
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     private void read(SelectionKey key) throws IOException, ClassNotFoundException {
         DatagramChannel chan = (DatagramChannel) key.channel();
         Con con = (Con) key.attachment();
@@ -153,6 +178,11 @@ public class Server {
         con.resp = ByteBuffer.wrap(Serializer.Serialize(objectHandler(obj, con.sa)));
     }
 
+    /**
+     * Отправка данных клиенту
+     * @param key
+     * @throws IOException
+     */
     private void write(SelectionKey key) throws IOException {
         DatagramChannel chan = (DatagramChannel) key.channel();
         Con con = (Con) key.attachment();

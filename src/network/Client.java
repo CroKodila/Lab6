@@ -23,6 +23,9 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 
 @Slf4j
+/**
+ * Класс клиент
+ */
 public class Client {
     private HashSet<String> executePaths = new HashSet<>();
     private boolean executeFault = false;
@@ -36,14 +39,32 @@ public class Client {
     private boolean isLogin = false;
     private int tryConnect = 5;
 
+    /**
+     * Мейн метод клиента
+     * @param args
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws InterruptedException
+     */
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
         new Client(args).run();
     }
 
+    /**
+     * Конструктор клиента
+     * @param args
+     * @throws IOException
+     */
     public Client(String[] args) throws IOException {
         connect(args);
     }
 
+    /**
+     * Подключение к серверу
+     * @param host
+     * @param port
+     * @throws IOException
+     */
     private void connect(String host, int port) throws IOException {
         PORT = port;
         IPAddress = InetAddress.getByName(host);
@@ -52,6 +73,11 @@ public class Client {
         isConnected = true;
     }
 
+    /**
+     * Парсинг аргументов
+     * @param args
+     * @throws IOException
+     */
     private void connect(String[] args) throws IOException {
         try {
             if (args.length >= 2) {
@@ -71,6 +97,12 @@ public class Client {
         }
     }
 
+    /**
+     * запуск клиентской части приложения
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws InterruptedException
+     */
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
         consoleManager = new ConsoleManager(new InputStreamReader(System.in), new OutputStreamWriter(System.out), false);
 
@@ -92,6 +124,13 @@ public class Client {
         }
     }
 
+    /**
+     * Передача команды на сервер
+     * @param sCmd
+     * @param cMgr
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     private void sendCommand(String sCmd, ConsoleManager cMgr) throws IOException, ClassNotFoundException {
         if (sCmd.isEmpty()) return;
         try {
@@ -145,7 +184,10 @@ public class Client {
         }
     }
 
-
+    /**
+     * Обработчик данных
+     * @param obj
+     */
     private void objectHandler(Object obj) {
         if (obj != null) {
 
@@ -160,6 +202,11 @@ public class Client {
         }
     }
 
+    /**
+     * Отправка объектов на сервер
+     * @param obj
+     * @throws IOException
+     */
     private void send(Object obj) throws IOException {
 
         byte[] data = Serializer.Serialize(obj);
@@ -174,6 +221,12 @@ public class Client {
 
     }
 
+    /**
+     * получение объектов с сервера
+     * @return
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     private Object recv() throws ClassNotFoundException, IOException {
         Object out = null;
         try {
