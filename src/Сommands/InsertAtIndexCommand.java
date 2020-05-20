@@ -1,18 +1,24 @@
 package Сommands;
 
-import Exceptions.InvalidValueException;
-import Managers.CollectionManager;
-import Managers.ConsoleManager;
+import exceptions.InvalidValueException;
+import managers.CollectionManager;
+import managers.ConsoleManager;
 import object.Organization;
 
 public class InsertAtIndexCommand extends Commands {
     public InsertAtIndexCommand() {
         cmdName = "insert_at";
         argCount = 1;
+        needInput = true;
     }
 
     @Override
-    public void execute(ConsoleManager consoleManager, CollectionManager collectionManager, String[] args) {
+    public Object getInput(ConsoleManager consoleManager){
+        return consoleManager.getOrganization();
+    }
+
+    @Override
+    public void execute(ConsoleManager consoleManager, CollectionManager collectionManager) {
         if (args.length < argCount) {
             throw new InvalidValueException("Введено " + args.length + " аргументов, ожидалось " + argCount);
         }
@@ -24,8 +30,8 @@ public class InsertAtIndexCommand extends Commands {
             return;
         }
         if (!collectionManager.checkIdExist(id)) {
-            Organization organization = consoleManager.getOrganization();
-            collectionManager.add(organization, id);
+            if(needInput && inputData == null) inputData = this.getInput(consoleManager);
+            collectionManager.add((Organization) inputData, id);
             consoleManager.print("Добавлена новая запись.");
 
         } else {

@@ -2,9 +2,10 @@ package object;
 
 import com.sun.org.apache.xpath.internal.operations.Or;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Organization implements Comparable{
+public class Organization implements Comparable, Serializable {
     private long id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null

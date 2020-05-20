@@ -1,8 +1,8 @@
 package Сommands;
 
-import Exceptions.InvalidValueException;
-import Managers.CollectionManager;
-import Managers.ConsoleManager;
+import exceptions.InvalidValueException;
+import managers.CollectionManager;
+import managers.ConsoleManager;
 
 public class RemoveByIDCommand extends Commands {
     public RemoveByIDCommand(){
@@ -11,7 +11,7 @@ public class RemoveByIDCommand extends Commands {
     }
 
     @Override
-    public void execute(ConsoleManager consoleManager, CollectionManager collectionManager, String[] args) {
+    public void execute(ConsoleManager consoleManager, CollectionManager collectionManager) {
         if (args.length < argCount) {
             throw new InvalidValueException("Введено " + args.length + " аргументов, ожидалось " + argCount);
         }

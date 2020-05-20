@@ -1,7 +1,7 @@
 package Сommands;
 
-import Managers.CollectionManager;
-import Managers.ConsoleManager;
+import managers.CollectionManager;
+import managers.ConsoleManager;
 
 public class SaveCommand extends Commands {
     public SaveCommand(){
@@ -10,7 +10,7 @@ public class SaveCommand extends Commands {
     }
 
     @Override
-    public void execute(ConsoleManager consoleManager, CollectionManager collectionManager, String[] args) {
+    public void execute(ConsoleManager consoleManager, CollectionManager collectionManager) {
       collectionManager.save();
         consoleManager.print("Данные сохранены.");
     }

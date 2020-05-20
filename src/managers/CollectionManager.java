@@ -1,12 +1,10 @@
-package Managers;
+package managers;
 
-import Exceptions.EmptyFileException;
-import ParserCSV.CSVFile;
-import ParserCSV.CSVManager;
-import ParserCSV.Delimiter;
-import com.sun.org.apache.xpath.internal.operations.Or;
+import exceptions.EmptyFileException;
+import parserCSV.CSVFile;
+import parserCSV.CSVManager;
+import parserCSV.Delimiter;
 import object.Address;
-import object.Collection;
 import object.Organization;
 
 import java.io.*;
@@ -181,9 +179,9 @@ public class CollectionManager {
             BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(path));
             stream.write(builder.toString().getBytes());
             stream.close();
-            System.out.println("Collection successfully saved to the file.");
+            System.out.println("Коллекция успешно сохранена!");
         } catch (IOException e) {
-            System.out.println("Here a problem with saving collection to the file!");
+            System.out.println("Возникли неполадки при сохранении!");
         }
     }
     /**

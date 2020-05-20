@@ -1,17 +1,24 @@
 package Сommands;
 
-import Exceptions.InvalidValueException;
-import Managers.CollectionManager;
-import Managers.ConsoleManager;
+import exceptions.InvalidValueException;
+import managers.CollectionManager;
+import managers.ConsoleManager;
 import object.Organization;
 
 public class UpdateIDCommand extends Commands {
     public UpdateIDCommand(){
         cmdName = "update";
         argCount = 1;
+        needInput = true;
     }
+
     @Override
-    public void execute(ConsoleManager consoleManager, CollectionManager collectionManager, String[] args) {
+    public Object getInput(ConsoleManager consoleManager){
+        return consoleManager.getOrganization();
+    }
+
+    @Override
+    public void execute(ConsoleManager consoleManager, CollectionManager collectionManager) {
         if (args.length < 1) {
             throw new InvalidValueException("Введено " + args.length + " аргументов, ожидалось " + argCount);
         }
@@ -26,9 +33,8 @@ public class UpdateIDCommand extends Commands {
 
         if(!collectionManager.checkIdExist(id))
             throw new InvalidValueException("Такого id не существует");
-
-        Organization organization = consoleManager.getOrganization();
-        collectionManager.update(organization, id);
+        if(needInput && inputData == null) inputData = this.getInput(consoleManager);
+        collectionManager.update((Organization)inputData, id);
         consoleManager.print("Элемент с id - " + id + " был изменен");
     }
 

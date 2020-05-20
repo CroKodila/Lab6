@@ -1,6 +1,8 @@
 package object;
 
-public class Address implements Comparable<Address> {
+import java.io.Serializable;
+
+public class Address implements Comparable<Address>, Serializable {
     private String street; //Строка не может быть пустой, Поле не может быть null
     private String zipCode; //Длина строки должна быть не меньше 8, Поле может быть null
 

@@ -1,21 +1,27 @@
 package Сommands;
 
-import Managers.CollectionManager;
-import Managers.ConsoleManager;
+import managers.CollectionManager;
+import managers.ConsoleManager;
 import object.Organization;
 
 public class RemoveLowerCommand extends Commands {
     public RemoveLowerCommand(){
         cmdName = "remove_lower";
+        needInput = true;
     }
 
     @Override
-    public void execute(ConsoleManager consoleManager, CollectionManager collectionManager, String[] args) {
+    public Object getInput(ConsoleManager consoleManager){
+        return consoleManager.getOrganization();
+    }
 
-        Organization organization = consoleManager.getOrganization();
+    @Override
+    public void execute(ConsoleManager consoleManager, CollectionManager collectionManager) {
 
+
+        if(needInput && inputData == null) inputData = this.getInput(consoleManager);
         int initSize = collectionManager.getCsvCollection().size();
-        collectionManager.removeLower(organization);
+        collectionManager.removeLower((Organization)inputData);
         int afterSize = collectionManager.getCsvCollection().size();
 
         consoleManager.print("Было удалено " + (initSize - afterSize) + " элементов");

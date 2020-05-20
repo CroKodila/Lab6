@@ -1,29 +1,42 @@
 package Сommands;
 
-import Managers.CollectionManager;
-import Managers.ConsoleManager;
+import managers.CollectionManager;
+import managers.ConsoleManager;
 
-public abstract class Commands {
+import java.io.Serializable;
+
+public abstract class Commands implements Serializable {
 
     int argCount = 0;
+    String[] args;
     String cmdName;
     String description;
+    boolean needInput = false;
+    Object inputData = null;
 
     /**
      *
      * @param consoleManager управление консолью
      * @param collectionManager управление коллекцией
-     * @param args аргументы, которые ввел пользователь в консоле
      */
-    public abstract void execute(ConsoleManager consoleManager, CollectionManager collectionManager, String[] args);
+    public abstract void execute(ConsoleManager consoleManager, CollectionManager collectionManager);
 
+
+    public Object getInput(ConsoleManager consoleManager){
+        return null;
+    }
 
     public String getCmdName() {
         return cmdName;
     }
-
+    public String[] getArgs(){ return this.args; }
     public String getDescription() {
         return description;
     }
+    public boolean getNeedInput(){ return needInput; }
+
+    public void setArgs(String[] args){ this.args = args; }
+    public void setInputData(Object inputData){ this.inputData = inputData; }
+
 }
 

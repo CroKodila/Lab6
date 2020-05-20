@@ -1,4 +1,4 @@
-package ParserCSV;
+package parserCSV;
 
 public enum Delimiter {
 

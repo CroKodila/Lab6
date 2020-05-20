@@ -1,14 +1,14 @@
 package Сommands;
 
-import Exceptions.EmptyFileException;
-import Exceptions.InvalidValueException;
-import Exceptions.NoCommandException;
-import Managers.CollectionManager;
-import Managers.CommandManager;
-import Managers.ConsoleManager;
+import exceptions.InvalidValueException;
+import exceptions.NoCommandException;
+import managers.CollectionManager;
+import managers.CommandManager;
+import managers.ConsoleManager;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.OutputStreamWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -18,7 +18,7 @@ public class ExecuteScriptCommand extends Commands {
         argCount = 1;
     }
     @Override
-    public void execute(ConsoleManager consoleManager, CollectionManager collectionManager, String[] args) {
+    public void execute(ConsoleManager consoleManager, CollectionManager collectionManager) {
         if (args.length < argCount) {
             throw new InvalidValueException("Введено " + args.length + " аргументов, ожидалось " + argCount);
         }
@@ -27,7 +27,7 @@ public class ExecuteScriptCommand extends Commands {
         consoleManager.print("Идет выполнение скрипта: " + pathToScript.getFileName());
         int lineNum = 1;
         try {
-            ConsoleManager _consoleManager = new ConsoleManager(new FileReader(pathToScript.toFile()), true);
+            ConsoleManager _consoleManager = new ConsoleManager(new FileReader(pathToScript.toFile()), new OutputStreamWriter(System.out), true);
             for (lineNum=1; _consoleManager.hasNextLine(); lineNum++) {
                 String line = _consoleManager.read();
                 CommandManager.getInstance().execute(line, _consoleManager, collectionManager);

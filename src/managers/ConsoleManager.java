@@ -1,27 +1,40 @@
-package Managers;
+package managers;
+import lombok.extern.slf4j.Slf4j;
 import object.Address;
 import object.Coordinates;
 import object.Organization;
 import object.OrganizationType;
-import sun.misc.FloatingDecimal;
 
+import java.io.IOException;
 import java.io.Reader;
+import java.io.Writer;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.text.ParsePosition;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-
+@Slf4j
 public class ConsoleManager {
     private Scanner scanner;
     private boolean isScript;
-    public void print(String message){System.out.println(message);}
+    private Writer writer;
+    private Reader reader;
 
-    public ConsoleManager(Reader reader, boolean isScript) {
+
+    public void print(String message){
+        try {
+        writer.write(message+"\n");
+        writer.flush();
+    } catch (IOException e) {
+        log.error("Ошибка при выводе. {}", e.getMessage());
+    }}
+
+    public ConsoleManager(Reader reader, Writer writer, boolean isScript)
+    {
+        this.reader = reader;
+        this.writer = writer;
         scanner = new Scanner(reader);
         this.isScript = isScript;
-
     }
     public Boolean getIsScript(){return isScript;}
 

@@ -1,17 +1,22 @@
 package Сommands;
 
-import Managers.CollectionManager;
-import Managers.ConsoleManager;
+import managers.CollectionManager;
+import managers.ConsoleManager;
 import object.Organization;
 
 public class AddElementCommand extends Commands {
     public AddElementCommand (){
       cmdName = "add";
+        needInput = true;
     };
     @Override
-    public void execute(ConsoleManager consoleManager, CollectionManager collectionManager, String[] args) {
-        Organization organization = consoleManager.getOrganization();
-        collectionManager.add(organization);
+    public Object getInput(ConsoleManager consoleManager){
+        return consoleManager.getOrganization();
+    }
+    @Override
+    public void execute(ConsoleManager consoleManager, CollectionManager collectionManager) {
+        if(needInput && inputData == null) inputData = this.getInput(consoleManager);
+        collectionManager.add((Organization)inputData);
 
         consoleManager.print("Добавлена новая запись.");
     }

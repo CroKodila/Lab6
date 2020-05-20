@@ -1,8 +1,10 @@
 package object;
 
-import Exceptions.InvalidValueException;
+import exceptions.InvalidValueException;
 
-public enum OrganizationType {
+import java.io.Serializable;
+
+public enum OrganizationType implements Serializable {
     PUBLIC(0),
     TRUST(1),
     PRIVATE_LIMITED_COMPANY(2),

@@ -1,6 +1,6 @@
-package Managers;
+package managers;
 
-import Exceptions.NoCommandException;
+import exceptions.NoCommandException;
 import Сommands.*;
 
 import java.util.*;
@@ -61,23 +61,25 @@ public class CommandManager {
      * @param collectionManager
      */
     public void execute(String str, ConsoleManager consoleManager, CollectionManager collectionManager) throws NoCommandException {
-        String[] parse = str.trim().split(" ");
-        if(!parse[0].equals("")) {
-            Commands cmd = null;
-                cmd = getCommand(parse[0].toLowerCase());
-
-            //consoleManager.writeln("execution cmd: " + parse[0]);
-
-            String[] args = Arrays.copyOfRange(parse, 1, parse.length);
-            //consoleManager.writeln("args count: " + args.length);
-
-            cmd.execute( consoleManager, collectionManager , args);
-        }
+        parseCommand(str).execute(consoleManager, collectionManager);
     }
 
 
     public List<Commands> getAllCommands() {
         return new ArrayList<>(commands.values());
+    }
+
+
+    public Commands parseCommand(String str) throws NoCommandException {
+        Commands cmd = null;
+        String[] parse = str.trim().split(" ");
+        if(!parse[0].equals("")) {
+            cmd = getCommand(parse[0].toLowerCase());
+            String[] args = Arrays.copyOfRange(parse, 1, parse.length);
+            cmd.setArgs(args);
+        }
+
+        return cmd;
     }
 }
 

@@ -1,33 +1,22 @@
-import Exceptions.EmptyFileException;
-import Exceptions.InvalidValueException;
-import Exceptions.NoCommandException;
-import Managers.CollectionManager;
-import Managers.CommandManager;
-import Managers.ConsoleManager;
-import ParserCSV.CSVFile;
-import ParserCSV.CSVManager;
-import object.Address;
-import object.Coordinates;
-import object.Organization;
-import object.OrganizationType;
+import exceptions.InvalidValueException;
+import exceptions.NoCommandException;
+import managers.CollectionManager;
+import managers.CommandManager;
+import managers.ConsoleManager;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.ParseException;
-import java.util.ArrayList;
+import java.io.OutputStreamWriter;
 
 public class Main {
     public static void main(String[] args){
 
-     String str = args[0];
-        CollectionManager collectionManager = new CollectionManager(str);
+    /* String str = args[0];
+        CollectionManager collectionManager = new CollectionManager(str);*/
         /**
          * Главный класс приложения
         */
-      // CollectionManager collectionManager = new CollectionManager("Organizations.csv");
-        ConsoleManager consoleManager = new ConsoleManager(new InputStreamReader(System.in),false);
+      CollectionManager collectionManager = new CollectionManager("Organizations.csv");
+        ConsoleManager consoleManager = new ConsoleManager(new InputStreamReader(System.in), new OutputStreamWriter(System.out),false);
         consoleManager.print("Используйте help для получения справки");
 
 

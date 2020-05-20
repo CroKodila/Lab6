@@ -1,6 +1,6 @@
-package ParserCSV;
+package parserCSV;
 
-import Exceptions.EmptyFileException;
+import exceptions.EmptyFileException;
 import object.Address;
 import object.Coordinates;
 import object.Organization;
@@ -9,7 +9,6 @@ import object.OrganizationType;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class CSVManager {
 

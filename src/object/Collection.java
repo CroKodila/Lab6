@@ -4,7 +4,7 @@ import object.Organization;
 
 import java.util.ArrayList;
 
-public class Collection {
+public class Collection  {
     private ArrayList<Organization> collection = new ArrayList<>();
 
     public String getTypeColl(){return collection.getClass().getTypeName();}

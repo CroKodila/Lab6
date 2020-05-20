@@ -1,4 +1,4 @@
-package ParserCSV;
+package parserCSV;
 
 import java.io.IOException;
 import java.nio.file.Paths;
