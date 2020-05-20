@@ -20,7 +20,6 @@ public class CollectionManager {
     /**
      * Класс, который работает с коллекцией
      * @param file
-     * @throws IOException
      */
     public CollectionManager(String file){
         try {
@@ -68,7 +67,6 @@ public class CollectionManager {
     /**
      * Удаляет элемент по id
      * @param id
-     * @return
      */
     public void removebyID(long id){
         Map.Entry<Integer,Organization> entry = extractById(id).entrySet().iterator().next();
