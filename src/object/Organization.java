@@ -18,9 +18,11 @@ public class Organization implements Comparable, Serializable {
 
     public Organization(){}
 
-    public Organization(final long id, final String name, final Long x, final double y, final int annualTurnover,final String fullName, final Long employeesCount,final OrganizationType type,final String street,final String zipCode){
+    public Organization(final long id, final String name, final Long x, final double y, final LocalDate creationDate, final int annualTurnover,final String fullName, final Long employeesCount,final OrganizationType type,final String street,final String zipCode){
         this.name = name;
+        this.id = id;
         this.coordinates = new Coordinates(x,y);
+        this.creationDate = creationDate;
         this.annualTurnover = annualTurnover;
         this.fullName = fullName;
         this.employeesCount = employeesCount;
@@ -36,6 +38,7 @@ public class Organization implements Comparable, Serializable {
         this.type = type;
         this.postalAddress = postalAddress;
     }
+
 
     public void CheckFields(){
 

@@ -1,5 +1,7 @@
 package Сommands;
 
+import database.Credentials;
+import database.DatabaseController;
 import managers.CollectionManager;
 import managers.ConsoleManager;
 
@@ -14,18 +16,20 @@ public abstract class Commands implements Serializable {
     boolean needInput = false;
     Object inputData = null;
 
+    public Commands(){}
     /**
      *
      * @param consoleManager управление консолью
      * @param collectionManager управление коллекцией
      */
-    public abstract void execute(ConsoleManager consoleManager, CollectionManager collectionManager);
-
+    public abstract Object execute(ConsoleManager consoleManager, CollectionManager collectionManager, DatabaseController databaseController, Credentials credentials);
 
     public Object getInput(ConsoleManager consoleManager){
         return null;
     }
 
+
+    public int getArgCount(){ return argCount; }
     public String getCmdName() {
         return cmdName;
     }
@@ -38,5 +42,15 @@ public abstract class Commands implements Serializable {
     public void setArgs(String[] args){ this.args = args; }
     public void setInputData(Object inputData){ this.inputData = inputData; }
 
+    public boolean isNumeric(String strNum) {
+        if (strNum == null)
+            return false;
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
 }
 

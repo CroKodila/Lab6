@@ -15,29 +15,30 @@ import java.util.stream.Collectors;
 public class CollectionManager {
     private CSVFile csvFile;
     private LocalDate InitDate;
-    private ArrayList<Organization> csvCollection = new ArrayList<>();
+    private List<Organization> csvCollection;
     private long maxId = 0L;
+
     /**
      * Класс, который работает с коллекцией
+     *
      * @param file
      */
-    public CollectionManager(String file){
+    public CollectionManager(String file) {
         try {
             csvFile = new CSVFile(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
         File file_ = new File(file);
-        try{
-            if(!file_.exists()) throw new FileNotFoundException();
-        }
-        catch(FileNotFoundException e){
+        try {
+            if (! file_.exists()) throw new FileNotFoundException();
+        } catch (FileNotFoundException e) {
             System.out.println("Файл не существует");
             System.exit(1);
         }
-        try{
-            if(!file_.canWrite() || !file_.canRead()) throw new SecurityException();
-        }catch (SecurityException ex){
+        try {
+            if (! file_.canWrite() || ! file_.canRead()) throw new SecurityException();
+        } catch (SecurityException ex) {
             System.out.println("Файл недоступен. Измените права доступа");
             System.exit(1);
         }
@@ -47,45 +48,57 @@ public class CollectionManager {
         InitDate = LocalDate.now();
     }
 
+    public CollectionManager() {
+        this.csvCollection = new ArrayList<>();
+        this.InitDate = LocalDate.now();
+    }
+
+    public CollectionManager(ArrayList<Organization> collection) {
+        this.InitDate = LocalDate.now();
+        this.csvCollection = Collections.synchronizedList(collection);
+        this.maxId = (long) (collection.size() + 1);
+    }
+
+
     /**
      * Добавляет новый элемент в коллекцию
+     *
      * @param org
      */
-    public void add(Organization org,Long Id){
-        while (true) {maxId+=1;
-       if (!checkIdExist(maxId)) break;
-       }
-        org.CheckFields();
-        if (Id == 0L){org.setId(maxId);} else {org.setId(Id);}
-        org.setCreationDate(LocalDate.now());
-
+    public void add(Organization org) {
         csvCollection.add(org);
     }
-    public void add(Organization org){
-        add(org,0L);
-    }
+
+
     /**
      * Удаляет элемент по id
+     *
      * @param id
      */
-    public void removebyID(long id){
-        Map.Entry<Integer,Organization> entry = extractById(id).entrySet().iterator().next();
-        this.getCsvCollection().remove(entry.getValue());
+    public boolean removebyID(long id) {
+        if (this.checkIdExist(id)) {
+            Map.Entry<Integer, Organization> entry = extractById(id).entrySet().iterator().next();
+            this.getCsvCollection().remove(entry.getValue());
+            return true;
+        }
+        return false;
     }
-    public void clear(){
+
+    public void clear() {
         csvCollection.clear();
     }
 
 
     /**
      * Находит элемент по id
+     *
      * @param id
      * @return
      */
-    private Map<Integer, Organization> extractById(Long id){
+    private Map<Integer, Organization> extractById(Long id) {
         Map<Integer, Organization> map = new HashMap<>();
-        for(int i=0;i<this.getCsvCollection().size();i++) {
-            if(this.getCsvCollection().get(i).getId().equals(id)) {
+        for (int i = 0; i < this.getCsvCollection().size(); i++) {
+            if (this.getCsvCollection().get(i).getId().equals(id)) {
                 map.put(i, this.getCsvCollection().get(i));
                 return map;
             }
@@ -97,8 +110,8 @@ public class CollectionManager {
     private void file2Collection() {
         try {
             csvCollection = new CSVManager(csvFile).getOrganization();
-            csvCollection.forEach(x-> {
-                if(maxId < x.getId())
+            csvCollection.forEach(x -> {
+                if (maxId < x.getId())
                     maxId = x.getId();
             });
         } catch (EmptyFileException e) {
@@ -109,7 +122,7 @@ public class CollectionManager {
         this.sort();
     }
 
-    private void sort(){
+    private void sort() {
         Collections.sort(csvCollection, new Comparator<Organization>() {
             @Override
             public int compare(Organization o1, Organization o2) {
@@ -118,37 +131,40 @@ public class CollectionManager {
         });
     }
 
-    public String getCollectionType(){
+    public String getCollectionType() {
         return csvCollection.getClass().getName();
     }
-    public int size(){
+
+    public int size() {
         return csvCollection.size();
     }
-    public LocalDate getInitDate(){
+
+    public LocalDate getInitDate() {
         return InitDate;
     }
-    public ArrayList<Organization> getCsvCollection(){
+
+    public List<Organization> getCsvCollection() {
         return csvCollection;
     }
 
     /**
-     *
      * @param id
      * @return свободный id
      */
-    public boolean checkIdExist(Long id){
-        for(int i=0;i<this.getCsvCollection().size();i++) {
-            if(this.getCsvCollection().get(i).getId().equals(id)) {
+    public boolean checkIdExist(Long id) {
+        for (int i = 0; i < this.getCsvCollection().size(); i++) {
+            if (this.getCsvCollection().get(i).getId().equals(id)) {
                 return true;
             }
         }
 
         return false;
     }
+
     /**
      * сохраняет коллекцию в csv формате
      */
- public void save(){
+    public void save() {
         String header = "id,name,coordinates_x,coordinates_y,creationDate,annualTurnover,fullName,employeesCount,type,postalAddress_street,postalAddress_zipCode";
 
         String path = csvFile.getPath();
@@ -182,26 +198,34 @@ public class CollectionManager {
             System.out.println("Возникли неполадки при сохранении!");
         }
     }
+
     /**
      * обновляет коллекцию по его id
+     *
      * @param organization
      * @param id
      */
-    public void update(Organization organization, Long id){
-        Map.Entry<Integer,Organization> entry = extractById(id).entrySet().iterator().next();
-        Organization updOrganization = entry.getValue();
-        updOrganization.setName(organization.getName());
-        updOrganization.setCoordinates(organization.getCoordinates());
-        updOrganization.setAnnualTurnover(organization.getAnnualTurnover());
-        updOrganization.setFullName(organization.getFullName());
-        updOrganization.setEmployeesCount(organization.getEmployeesCount());
-        updOrganization.setType(organization.getType());
+    public boolean update(Organization organization, Long id) {
+        if (this.checkIdExist(id)) {
+            Map.Entry<Integer, Organization> entry = extractById(id).entrySet().iterator().next();
+            Organization updOrganization = entry.getValue();
+            updOrganization.setName(organization.getName());
+            updOrganization.setCoordinates(organization.getCoordinates());
+            updOrganization.setAnnualTurnover(organization.getAnnualTurnover());
+            updOrganization.setFullName(organization.getFullName());
+            updOrganization.setEmployeesCount(organization.getEmployeesCount());
+            updOrganization.setType(organization.getType());
 
-        updOrganization.setPostalAddress(organization.getPostalAddress());
+            updOrganization.setPostalAddress(organization.getPostalAddress());
 
 
-        this.getCsvCollection().set(entry.getKey(), updOrganization);
+            this.getCsvCollection().set(entry.getKey(), updOrganization);
+            return true;
+        }
+        return false;
     }
+
+
 
     /**
      * удаляет элементы, меньше заданного

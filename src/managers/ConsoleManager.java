@@ -1,4 +1,5 @@
 package managers;
+import database.Credentials;
 import lombok.extern.slf4j.Slf4j;
 import object.Address;
 import object.Coordinates;
@@ -11,6 +12,7 @@ import java.io.Writer;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
+import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 @Slf4j
@@ -74,7 +76,7 @@ public class ConsoleManager {
         OrganizationType organizationType = getOrganizationType();
         Address postalAddress = getpostalAddress();
 
-        return new Organization(name,coordinates,annualTurnover,fullName,employeesCount,organizationType,postalAddress);
+        return new Organization(-1L,name,coordinates.getX(),coordinates.getY(), LocalDate.now(),annualTurnover,fullName,employeesCount,organizationType,postalAddress.getStreet(),postalAddress.getZipCode());
     }
     /**
      * получает координаты
@@ -190,6 +192,12 @@ public class ConsoleManager {
 
         }
         return output;
+    }
+    public Credentials getCredentials(){
+        String username = readmessage("Login: ", false);
+        String password = readmessage("Password: ", false);
+
+        return new Credentials(-1, username, password);
     }
 
 }

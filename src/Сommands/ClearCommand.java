@@ -1,5 +1,7 @@
 package Сommands;
 
+import database.Credentials;
+import database.DatabaseController;
 import managers.CollectionManager;
 import managers.ConsoleManager;
 
@@ -8,8 +10,16 @@ public class ClearCommand extends Commands {
         cmdName = "clear";
     }
     @Override
-    public void execute(ConsoleManager consoleManager, CollectionManager collectionManager) {
-        collectionManager.clear();
-        consoleManager.print(" Все данные удалены");
+    public Object execute(ConsoleManager consoleManager, CollectionManager collectionManager, DatabaseController databaseController, Credentials credentials) {
+
+        String retDelAll = databaseController.clearOrganization(credentials);
+        if (retDelAll == null) {
+            collectionManager.clear();
+            consoleManager.print("All elements deleted");
+        }else{
+            consoleManager.print("Problem: " + retDelAll);
+        }
+
+        return null;
     }
 }

@@ -23,18 +23,14 @@ public class CommandManager {
         addCommand(new ExitCommand());
         addCommand(new ShowCommand());
         addCommand(new InfoCommand());
-        addCommand(new InsertAtIndexCommand());
         addCommand(new RemoveByIDCommand());
         addCommand(new ClearCommand());
         addCommand(new GroupCountingByIDCommand());
         addCommand(new PrintAnnualTurnoverCommand());
-        addCommand(new RemoveByPostalAdressCommand());
-        addCommand(new RemoveGreaterCommand());
-        addCommand(new RemoveLowerCommand());
-        addCommand(new RemoveLowerCommand());
-        addCommand(new SaveCommand());
         addCommand(new ExecuteScriptCommand());
         addCommand(new UpdateIDCommand());
+        addCommand(new LoginCommand());
+        addCommand(new RegisterCommand());
     }
 
     private void addCommand(Commands cmd){
@@ -61,7 +57,7 @@ public class CommandManager {
      * @param collectionManager
      */
     public void execute(String str, ConsoleManager consoleManager, CollectionManager collectionManager) throws NoCommandException {
-        parseCommand(str).execute(consoleManager, collectionManager);
+        //parseCommand(str).execute(consoleManager, collectionManager);
     }
 
 

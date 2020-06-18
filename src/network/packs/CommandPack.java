@@ -1,21 +1,24 @@
 package network.packs;
 
+import database.Credentials;
+import Сommands.Commands;
+
 import java.io.Serializable;
 
 public class CommandPack implements Serializable {
-    private String cmdName;
-    private String[] args;
+    private Commands command;
+    private Credentials credentials;
 
-    public CommandPack(String cmdName, String[] args){
-        this.cmdName = cmdName;
-        this.args = args;
+    public CommandPack(Commands command, Credentials credentials){
+        this.command = command;
+        this.credentials = credentials;
     }
 
-    public String getCmdName() {
-        return cmdName;
+    public Commands getCommand() {
+        return command;
     }
 
-    public String[] getArgs() {
-        return args;
+    public Credentials getCredentials() {
+        return credentials;
     }
 }

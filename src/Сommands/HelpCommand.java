@@ -1,5 +1,7 @@
 package Сommands;
 
+import database.Credentials;
+import database.DatabaseController;
 import managers.CollectionManager;
 import managers.ConsoleManager;
 
@@ -8,7 +10,7 @@ public class HelpCommand extends Commands {
         cmdName = "help";
     }
     @Override
-    public void execute(ConsoleManager consoleManager, CollectionManager collectionManager) {
+    public Object execute(ConsoleManager consoleManager, CollectionManager collectionManager, DatabaseController databaseController, Credentials credentials) {
             consoleManager.print("help : вывести справку по доступным командам\n" +
                     "info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)\n" +
                     "show : вывести в стандартный поток вывода все элементы коллекции в строковом представлении\n" +
@@ -24,6 +26,7 @@ public class HelpCommand extends Commands {
                     "remove_any_by_postal_address postalAddress : удалить из коллекции один элемент, значение поля postalAddress которого эквивалентно заданному\n" +
                     "group_counting_by_id : сгруппировать элементы коллекции по значению поля id, вывести количество элементов в каждой группе\n" +
                     "print_field_ascending_annual_turnover : вывести значения поля annualTurnover всех элементов в порядке возрастания");
+            return null;
         }
 
     }

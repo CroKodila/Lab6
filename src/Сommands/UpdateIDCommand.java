@@ -1,5 +1,7 @@
 package Сommands;
 
+import database.Credentials;
+import database.DatabaseController;
 import exceptions.InvalidValueException;
 import managers.CollectionManager;
 import managers.ConsoleManager;
@@ -18,24 +20,27 @@ public class UpdateIDCommand extends Commands {
     }
 
     @Override
-    public void execute(ConsoleManager consoleManager, CollectionManager collectionManager) {
-        if (args.length < 1) {
-            throw new InvalidValueException("Введено " + args.length + " аргументов, ожидалось " + argCount);
-        }
-
-        long id;
+    public Object execute(ConsoleManager consoleManager, CollectionManager collectionManager, DatabaseController databaseController, Credentials credentials) {
+        int id;
         try {
-            id = Long.parseLong(args[0]);
-        } catch (ClassCastException e) {
-            e.printStackTrace();
-            return;
+            id = Integer.parseInt(args[0]);
+        } catch (Exception e) {
+            throw new InvalidValueException("Format error");
         }
 
-        if(!collectionManager.checkIdExist(id))
-            throw new InvalidValueException("Такого id не существует");
-        if(needInput && inputData == null) inputData = this.getInput(consoleManager);
-        collectionManager.update((Organization)inputData, id);
-        consoleManager.print("Элемент с id - " + id + " был изменен");
+        String cityID = databaseController.updateOrganization(id, (Organization) inputData, credentials);
+        if (cityID == null) {
+            if(collectionManager.update((Organization) inputData, (long)id))
+                consoleManager.print("Element with id(" + id + ") - edited");
+            else
+                consoleManager.print("Element with id(" + id + ") - doesn't");
+        } else {
+            consoleManager.print("Have some problems: " + cityID);
+        }
+
+        inputData = null;
+
+        return null;
     }
 
 }

@@ -3,12 +3,12 @@ package network.packs;
 import java.io.Serializable;
 
 public class CommandExecPack implements Serializable {
-    private final String message;
-    public CommandExecPack(String message){
+    private final Object message;
+    public CommandExecPack(Object message){
         this.message = message;
     }
 
-    public String getMessage() {
+    public Object getMessage() {
         return message;
     }
 }
