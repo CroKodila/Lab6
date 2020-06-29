@@ -1,9 +1,9 @@
 
-exceptions
-managers
-network
-network.packs
-object
-parserCSV
-utilits
-Сommands
+ru.ifmo.lab.exceptions
+ru.ifmo.lab.managers
+ru.ifmo.lab.network
+ru.ifmo.lab.network.packs
+ru.ifmo.lab.object
+ru.ifmo.lab.parserCSV
+ru.ifmo.lab.utilits
+ru.ifmo.lab.Сommands
