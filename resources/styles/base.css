@@ -24,7 +24,7 @@
  *                                                                             *
  ******************************************************************************/
 .widget-pane {
-    -fx-grid-line-color: -swatch-dark-gray;
+    -fx-grid-line-color: -swatch-light-gray;
 }
 
 /*******************************************************************************
@@ -33,14 +33,14 @@
  *                                                                             *
  ******************************************************************************/
 .tab-pane {
-    -fx-border-color: blue;
+    -fx-border-color: white;
     -fx-border-width: 0.025em;
     -fx-open-tab-animation: NONE;
     -fx-close-tab-animation: NONE;
 }
 
 .tab-header-area .tab:selected .focus-indicator {
-    -fx-border-color: dark yellow;
+    -fx-border-color: transparent;
 }
 
 .tab-container {
@@ -59,7 +59,7 @@
  *                                                                             *
  ******************************************************************************/
 .drawer {
-    -fx-background-color: -swatch-white;
+    -fx-background-color: -swatch-light-gray;
 }
 
 .drawer .tab-pane .tab-header-background {
@@ -79,7 +79,7 @@
     -fx-background-color: -swatch-light-gray;
     -fx-cursor: h-resize;
     -fx-border-width: 0 2 0 0, 0 1 0 0;
-    -fx-border-color: -swatch-dark-gray, -swatch-green;
+    -fx-border-color: -swatch-dark-gray, -swatch-gray;
 }
 
 .drawer .drawer-separator .toggle-button {
